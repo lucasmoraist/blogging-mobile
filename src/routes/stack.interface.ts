@@ -3,9 +3,15 @@ import {NativeStackNavigationProp, NativeStackScreenProps} from '@react-navigati
 export type PropsStackRoutes = {
   Login: undefined;
   Register: undefined;
-  Home: undefined;
+  Tab: undefined;
   PostDetails: {id: number};
 };
+
+export type	PropsTabRoutes = {
+  Home: undefined;
+  Profile: {email: string};
+  Search: undefined;
+}
 
 export type PropsStackScreens<T extends keyof PropsStackRoutes> =
   NativeStackScreenProps<PropsStackRoutes, T>;

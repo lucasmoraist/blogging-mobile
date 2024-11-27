@@ -32,7 +32,7 @@ export function Login() {
     const user = AuthLogin(data);
 
     if (user) {
-      navigation.navigate('Home');
+      navigation.navigate('Tab');
     }
   });
 

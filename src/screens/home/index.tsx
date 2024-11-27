@@ -8,6 +8,7 @@ export function Home() {
   const header = () => {
     return (
       <View style={styles.top}>
+        <Text style={styles.titulo}>Blogging</Text>
       </View>
     );
   };
@@ -25,6 +26,12 @@ const styles = StyleSheet.create({
   top: {
     backgroundColor: '#219ebc',
     height: 80,
+    alignItems: 'center',
     justifyContent: 'center',
+  },
+  titulo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
   }
 });
