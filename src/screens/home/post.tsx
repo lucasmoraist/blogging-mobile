@@ -12,7 +12,7 @@ export function RenderPost({item}: Props) {
 
   const formatDate = (date: string) => {
     const dateObj = new Date(date);
-    return dateObj.toLocaleDateString('en', {
+    return dateObj.toLocaleDateString('pt-br', {
       month: 'short',
       day: 'numeric',
       year: 'numeric',
