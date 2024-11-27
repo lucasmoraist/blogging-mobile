@@ -1,11 +1,15 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {IPost} from '../../interface/post.interface';
+import {useNavigation} from '@react-navigation/native';
+import {NavigationProp} from '../../routes/stack.interface';
 
 interface Props {
   item: IPost;
 }
 
 export function RenderPost({item}: Props) {
+  const route = useNavigation<NavigationProp>();
+
   const renderContent = (content: string) => {
     return content.length > 80 ? content.slice(0, 80) + '...' : content;
   };
@@ -20,7 +24,11 @@ export function RenderPost({item}: Props) {
   };
 
   return (
-    <View style={styles.card}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={() => {
+        route.navigate('PostDetails', {id: item.id});
+      }}>
       <View style={styles.contentView}>
         <Text style={styles.author}>{item.teacher.name}</Text>
         <View>
@@ -30,7 +38,7 @@ export function RenderPost({item}: Props) {
         <Text style={styles.date}>{formatDate(item.created_at)}</Text>
       </View>
       <Image source={{uri: item.url_image}} style={styles.image} />
-    </View>
+    </TouchableOpacity>
   );
 }
 

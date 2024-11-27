@@ -9,11 +9,18 @@ import {
 } from 'react-native';
 import {IPost} from '../../interface/post.interface';
 import {getOnePost} from '../../service/post/getOnePost';
+import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
+import {NavigationProp, PropsStackRoutes} from '../../routes/stack.interface';
+
+type PostDetailsRouteProp = RouteProp<PropsStackRoutes, 'PostDetails'>;
 
 export function PostDetails() {
-  const id = 1;
+  const route = useRoute<PostDetailsRouteProp>();
+  const navigation = useNavigation<NavigationProp>();
 
   const [post, setPost] = useState<IPost>();
+
+  const {id} = route.params;
 
   useEffect(() => {
     const response = getOnePost(id);
@@ -35,7 +42,9 @@ export function PostDetails() {
 
   return (
     <ScrollView style={styles.container}>
-      <TouchableOpacity style={styles.btn}>
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={() => navigation.navigate('Home')}>
         <Text style={styles.btnText}>Voltar</Text>
       </TouchableOpacity>
 
