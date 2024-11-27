@@ -1,8 +1,8 @@
-import { View } from "react-native";
+import { SafeAreaView } from "react-native";
 import { Home } from "./src/screens/home";
 
 export function App() {
-  return <View>
+  return <SafeAreaView>
     <Home />
-  </View>
+  </SafeAreaView>
 }
