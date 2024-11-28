@@ -2,8 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {NavigationProp} from '../../../routes/stack.interface';
 import {TextInput} from 'react-native-gesture-handler';
-import {useState} from 'react';
-import {Controller, useForm} from 'react-hook-form';
+import {Controller, useForm, useWatch} from 'react-hook-form';
 import {Picker} from '@react-native-picker/picker';
 import {AuthRegister} from '../../../service/user/register';
 
@@ -12,7 +11,7 @@ const logo = require('../../../assets/logo.png');
 type FormData = {
   name: string;
   schoolSubject: string;
-  role: string;
+  role: 'teacher' | 'student';
   username: string;
   password: string;
 };
@@ -32,6 +31,13 @@ export function Register() {
     if (auth) {
       navigation.navigate('Login');
     }
+  });
+
+  // O useWatch é um hook do react-hook-form que permite que a tela reaja a mudanças no valor de um campo no formulário
+  const selectedRole = useWatch({
+    control,
+    name: 'role',
+    defaultValue: 'student',
   });
 
   return (
@@ -57,33 +63,6 @@ export function Register() {
 
         <Controller
           control={control}
-          name="name"
-          render={({field: {onChange, value}}) => (
-            <View style={styles.label}>
-              <View style={styles.picker}>
-                <Picker selectedValue={value} onValueChange={onChange}>
-                  <Picker.Item
-                    label="Selecione uma matéria"
-                    value=""
-                    enabled={false}
-                    color="grey"
-                  />
-                  <Picker.Item label="Biologia" value="Biologia" />
-                  <Picker.Item label="Física" value="Física" />
-                  <Picker.Item label="Geografia" value="Geografia" />
-                  <Picker.Item label="História" value="História" />
-                  <Picker.Item label="Inglês" value="Inglês" />
-                  <Picker.Item label="Matemática" value="Matemática" />
-                  <Picker.Item label="Português" value="Português" />
-                  <Picker.Item label="Química" value="Química" />
-                </Picker>
-              </View>
-            </View>
-          )}
-        />
-
-        <Controller
-          control={control}
           name="role"
           render={({field: {onChange, value}}) => (
             <View style={styles.label}>
@@ -102,6 +81,35 @@ export function Register() {
             </View>
           )}
         />
+
+        {selectedRole === 'teacher' && (
+          <Controller
+            control={control}
+            name="name"
+            render={({field: {onChange, value}}) => (
+              <View style={styles.label}>
+                <View style={styles.picker}>
+                  <Picker selectedValue={value} onValueChange={onChange}>
+                    <Picker.Item
+                      label="Selecione uma matéria"
+                      value=""
+                      enabled={false}
+                      color="grey"
+                    />
+                    <Picker.Item label="Biologia" value="Biologia" />
+                    <Picker.Item label="Física" value="Física" />
+                    <Picker.Item label="Geografia" value="Geografia" />
+                    <Picker.Item label="História" value="História" />
+                    <Picker.Item label="Inglês" value="Inglês" />
+                    <Picker.Item label="Matemática" value="Matemática" />
+                    <Picker.Item label="Português" value="Português" />
+                    <Picker.Item label="Química" value="Química" />
+                  </Picker>
+                </View>
+              </View>
+            )}
+          />
+        )}
 
         <Controller
           control={control}
