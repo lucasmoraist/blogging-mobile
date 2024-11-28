@@ -44,7 +44,7 @@ export function PostDetails() {
     <ScrollView style={styles.container}>
       <TouchableOpacity
         style={styles.btn}
-        onPress={() => navigation.navigate('Home')}>
+        onPress={() => navigation.navigate('Tab')}>
         <Text style={styles.btnText}>Voltar</Text>
       </TouchableOpacity>
 
