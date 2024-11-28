@@ -9,6 +9,8 @@ import {ITeacher} from '../../../interface/teacher.interface';
 import {createUser} from '../../../service/user/register';
 import {useState} from 'react';
 import {createTeacher} from '../../../service/teacher/create';
+import {IStudent} from '../../../interface/student.interface';
+import {createStudent} from '../../../service/student/create';
 
 const logo = require('../../../assets/logo.png');
 
@@ -44,14 +46,14 @@ export function Register() {
       role: data.role,
     };
 
+    const responseUser = await createUser(user);
+
+    if (!responseUser?.id) {
+      throw new Error('Erro ao criar usuário: ID não retornado');
+    }
+    
     try {
       if (data.role === 'teacher') {
-        const responseUser = await createUser(user);
-
-        if (!responseUser?.id) {
-          throw new Error('Erro ao criar usuário: ID não retornado');
-        }
-
         const teacher: ITeacher = {
           name: data.name,
           school_subject: data.school_subject,
@@ -63,11 +65,22 @@ export function Register() {
         if (!responseTeacher && !responseUser) {
           throw new Error('Erro ao criar professor');
         }
+      } else {
+        const student: IStudent = {
+          name: data.name,
+          user_id: responseUser.id,
+        };
 
-        navigation.navigate('Login');
+        const responseStudent = await createStudent(student);
+
+        if (!responseStudent && !responseUser) {
+          throw new Error('Erro ao criar aluno');
+        }
       }
     } catch (error) {
       console.error('Erro durante a submissão:', error);
+    } finally {
+      navigation.navigate('Login');
     }
   });
 
