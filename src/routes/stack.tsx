@@ -8,6 +8,7 @@ import {Register} from '../screens/auth/register';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Image, Text} from 'react-native';
 import { Search } from '../screens/search';
+import { Profile } from '../screens/profile';
 
 const home = require('../assets/icon-home.png');
 const search = require('../assets/icon-search.png');
@@ -45,7 +46,7 @@ export function StackNavigationApp() {
         />
         <Tab.Screen
           name="Profile"
-          component={() => <Text>Profile</Text>}
+          component={Profile}
           options={{
             tabBarIcon: () => (
               <Image source={profile} style={{width: 20, height: 20}} />
