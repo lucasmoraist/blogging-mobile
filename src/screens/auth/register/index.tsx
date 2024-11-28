@@ -2,21 +2,26 @@ import {useNavigation} from '@react-navigation/native';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {NavigationProp} from '../../../routes/stack.interface';
 import {TextInput} from 'react-native-gesture-handler';
-import {Controller, useForm, useWatch} from 'react-hook-form';
+import {Controller, set, useForm, useWatch} from 'react-hook-form';
 import {Picker} from '@react-native-picker/picker';
-import {AuthRegister} from '../../../service/user/register';
+import {IUser} from '../../../interface/user.interface';
+import {ITeacher} from '../../../interface/teacher.interface';
+import {createUser} from '../../../service/user/register';
+import {useState} from 'react';
+import {createTeacher} from '../../../service/teacher/create';
 
 const logo = require('../../../assets/logo.png');
 
 type FormData = {
   name: string;
-  schoolSubject: string;
+  school_subject: string;
   role: 'teacher' | 'student';
   username: string;
   password: string;
 };
 
 export function Register() {
+  const [userId, setUserId] = useState<number>();
   const navigation = useNavigation<NavigationProp>();
 
   const {
@@ -25,19 +30,45 @@ export function Register() {
     formState: {errors},
   } = useForm<FormData>({});
 
-  const onSubmit = handleSubmit(data => {
-    const auth = AuthRegister(data);
-
-    if (auth) {
-      navigation.navigate('Login');
-    }
-  });
-
   // O useWatch é um hook do react-hook-form que permite que a tela reaja a mudanças no valor de um campo no formulário
   const selectedRole = useWatch({
     control,
     name: 'role',
     defaultValue: 'student',
+  });
+
+  const onSubmit = handleSubmit(async data => {
+    const user: IUser = {
+      username: data.username,
+      password: data.password,
+      role: data.role,
+    };
+
+    try {
+      if (data.role === 'teacher') {
+        const responseUser = await createUser(user);
+
+        if (!responseUser?.id) {
+          throw new Error('Erro ao criar usuário: ID não retornado');
+        }
+
+        const teacher: ITeacher = {
+          name: data.name,
+          school_subject: data.school_subject,
+          user_id: responseUser.id,
+        };
+
+        const responseTeacher = await createTeacher(teacher);
+
+        if (!responseTeacher && !responseUser) {
+          throw new Error('Erro ao criar professor');
+        }
+
+        navigation.navigate('Login');
+      }
+    } catch (error) {
+      console.error('Erro durante a submissão:', error);
+    }
   });
 
   return (
@@ -85,7 +116,7 @@ export function Register() {
         {selectedRole === 'teacher' && (
           <Controller
             control={control}
-            name="name"
+            name="school_subject"
             render={({field: {onChange, value}}) => (
               <View style={styles.label}>
                 <View style={styles.picker}>
