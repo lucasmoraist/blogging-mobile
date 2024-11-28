@@ -7,6 +7,7 @@ import {Login} from '../screens/auth/login';
 import {Register} from '../screens/auth/register';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Image, Text} from 'react-native';
+import { Search } from '../screens/search';
 
 const home = require('../assets/icon-home.png');
 const search = require('../assets/icon-search.png');
@@ -35,7 +36,7 @@ export function StackNavigationApp() {
         />
         <Tab.Screen
           name="Search"
-          component={() => <Text>Search</Text>}
+          component={Search}
           options={{
             tabBarIcon: () => (
               <Image source={search} style={{width: 20, height: 20}} />
