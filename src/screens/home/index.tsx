@@ -1,6 +1,6 @@
-import {FlatList, Image, StyleSheet, Text, View} from 'react-native';
-import {usePost} from '../../hooks/usePost';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {RenderPost} from './post';
+import {usePost} from '../../hooks/usePost';
 
 export function Home() {
   const [posts] = usePost();
@@ -33,5 +33,5 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#fff',
-  }
+  },
 });

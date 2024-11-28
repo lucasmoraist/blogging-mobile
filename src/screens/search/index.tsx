@@ -13,12 +13,16 @@ export function Search() {
   const [searchResults, setSearchResults] = useState<IPost[]>([]);
 
   useEffect(() => {
-    if (search) {
-      setSearchResults(SearchPost(search));
+    async function fetchSearch() {
+      const posts = await SearchPost(search);
+      
+      setSearchResults(posts);
     }
+
+    fetchSearch();
   }, [search]);
 
-  const findPost = (id: number) => {
+  const findPost = (id: string) => {
     // Salvar resultado da busca no async storage para exibir na tela como buscas recentes
     navigation.navigate('PostDetails', {id: id});
   };
@@ -43,10 +47,12 @@ export function Search() {
                 key={post.id}
                 onPress={() => findPost(post.id)}
                 style={styles.searchResult}>
+                {/* 
+                Adicionar icones de busca
                 <Image
-                  source={{uri: post.url_image}}
+                  source={{uri: post.urlimage}}
                   style={styles.searchResultImage}
-                />
+                /> */}
                 <Text style={styles.searchResultTitle}>{post.title}</Text>
               </TouchableOpacity>
             ))}

@@ -30,14 +30,14 @@ export function RenderPost({item}: Props) {
         route.navigate('PostDetails', {id: item.id});
       }}>
       <View style={styles.contentView}>
-        <Text style={styles.author}>{item.teacher.name}</Text>
+        <Text style={styles.author}>{item.name}</Text>
         <View>
           <Text style={styles.title}>{item.title}</Text>
           <Text style={styles.content}>{renderContent(item.content)}</Text>
         </View>
-        <Text style={styles.date}>{formatDate(item.created_at)}</Text>
+        <Text style={styles.date}>{formatDate(item.createdat)}</Text>
       </View>
-      <Image source={{uri: item.url_image}} style={styles.image} />
+      <Image source={{uri: item.urlimage}} style={styles.image} />
     </TouchableOpacity>
   );
 }

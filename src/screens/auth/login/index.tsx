@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '../../../routes/stack.interface';
 import {AuthLogin} from '../../../service/user/login';

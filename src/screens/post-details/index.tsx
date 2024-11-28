@@ -23,9 +23,13 @@ export function PostDetails() {
   const {id} = route.params;
 
   useEffect(() => {
-    const response = getOnePost(id);
-    setPost(response);
-  }, []);
+    async function fetchPost() {
+      const post = await getOnePost(id);
+      setPost(post);
+    }
+
+    fetchPost();
+  }, [id]);
 
   const formatDate = (date: string) => {
     const dateObj = new Date(date);
@@ -50,19 +54,17 @@ export function PostDetails() {
 
       <View style={styles.about}>
         <View>
-          <Image source={{uri: post.url_image}} style={styles.image} />
+          <Image source={{uri: post.urlimage}} style={styles.image} />
           <Text style={styles.title}>{post.title}</Text>
         </View>
 
         <View style={styles.info}>
           <View style={styles.author}>
-            <Text style={styles.name}>{post.teacher.name}</Text>
+            <Text style={styles.name}>{post.name}</Text>
             <Text style={{fontSize: 16, fontWeight: 'bold'}}>•</Text>
-            <Text style={styles.school_subject}>
-              {post.teacher.school_subject}
-            </Text>
+            <Text style={styles.school_subject}>{post.school_subject}</Text>
           </View>
-          <Text style={styles.created_at}>{formatDate(post.created_at)}</Text>
+          <Text style={styles.created_at}>{formatDate(post.createdat)}</Text>
         </View>
       </View>
       <Text style={styles.content}>{post.content}</Text>

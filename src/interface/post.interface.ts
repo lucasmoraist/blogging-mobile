@@ -1,10 +1,10 @@
-import { ITeacher } from "./teacher.interface";
-
 export interface IPost {
-    id: number;
+    id: string;
     title: string;
     content: string;
-    url_image: string;
-    created_at: string;
-    teacher: ITeacher;
+    urlimage: string;
+    createdat: string;
+    teacher_id: number;
+    name: string;
+    school_subject: string;
 }

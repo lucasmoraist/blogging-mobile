@@ -1,6 +1,6 @@
-import {PostMock} from '../../mocks/post';
+import { api } from '../api';
 
-export function SearchPost(title: string) {
-  const titleLower = title.toLowerCase();
-  return PostMock.filter(post => post.title.toLowerCase().includes(titleLower));
+export async function SearchPost(term: string){
+  const response = await api.get(`/posts/search?term=${term}`);
+  return response.data;
 }

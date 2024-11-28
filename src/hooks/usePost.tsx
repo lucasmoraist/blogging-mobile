@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react"
-import { IPost } from "../interface/post.interface"
-import { getPosts } from "../service/post/getPosts"
+import {useEffect, useState} from 'react';
+import {listAll} from '../service/post/getPosts';
 
 export function usePost() {
-    const [posts, setPosts] = useState<IPost[]>()
-    useEffect(() => {
-        const response = getPosts()
-        setPosts(response)
-    }, [])
+  const [posts, setPosts] = useState([]);
 
-    return [posts]
+  useEffect(() => {
+    async function fetchPost() {
+      const response = await listAll(1, 10);
+      setPosts(response);
+    }
+
+    fetchPost();
+  }, []);
+
+  return [posts];
 }

@@ -4,7 +4,7 @@ export type PropsStackRoutes = {
   Login: undefined;
   Register: undefined;
   Tab: undefined;
-  PostDetails: {id: number};
+  PostDetails: {id: string};
 };
 
 export type	PropsTabRoutes = {
