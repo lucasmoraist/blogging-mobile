@@ -10,6 +10,7 @@ import {Search} from '../screens/search';
 import {Profile} from '../screens/profile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from '@react-native-vector-icons/fontawesome6';
+import { Create } from '../screens/createPost';
 
 const Stack = createStackNavigator<PropsStackRoutes>();
 const Tab = createBottomTabNavigator<PropsTabRoutes>();
@@ -64,7 +65,7 @@ export function StackNavigationApp() {
         {role === 'teacher' ? (
           <Tab.Screen
             name="CreatePost"
-            component={() => <></>}
+            component={Create}
             options={{
               tabBarIcon: () => (
                 <Icon name="square-plus" size={20} color={'#219EBC'} />

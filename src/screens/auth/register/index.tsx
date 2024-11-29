@@ -25,7 +25,6 @@ type FormData = {
 };
 
 export function Register() {
-  const [userId, setUserId] = useState<number>();
   const navigation = useNavigation<NavigationProp>();
 
   const {

@@ -11,7 +11,7 @@ export type	PropsTabRoutes = {
   Home: undefined;
   Profile: {email: string};
   Search: undefined;
-  CreatePost: {id?: string};
+  CreatePost: undefined;
 }
 
 export type PropsStackScreens<T extends keyof PropsStackRoutes> =
