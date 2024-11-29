@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react';
 import {IPost} from '../../interface/post.interface';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getOneStudent} from '../../service/student/getOneStudent';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {RenderPosts} from './renderPosts';
 
 const profileIcon = require('../../assets/profile.png');
@@ -27,7 +27,6 @@ export function Profile() {
 
       if (role === 'teacher') {
         const response = await getOneTeacher();
-
         setProfile(response);
       } else {
         const response = await getOneStudent();
@@ -38,7 +37,7 @@ export function Profile() {
   }, []);
 
   return (
-    <View>
+    <ScrollView>
       <View style={styles.top}>
         <Text style={styles.title}>Meu Perfil</Text>
       </View>
@@ -62,7 +61,7 @@ export function Profile() {
           <Text>Excluir conta</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -80,6 +79,7 @@ const styles = StyleSheet.create({
   },
   container: {
     margin: 20,
+    gap: 40,
   },
   person: {
     flexDirection: 'row',
