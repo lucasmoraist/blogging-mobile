@@ -1,6 +1,4 @@
 import {IUser} from '../../interface/user.interface';
-import {TeacherMock} from '../../mocks/teacher';
-import {UserMock} from '../../mocks/user';
 import {api} from '../api';
 
 type Data = {

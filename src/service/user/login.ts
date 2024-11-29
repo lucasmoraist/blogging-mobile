@@ -1,4 +1,3 @@
-import {UserMock} from '../../mocks/user';
 import {api} from '../api';
 
 type Data = {
