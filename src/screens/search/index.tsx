@@ -2,7 +2,7 @@ import {Text} from '@react-navigation/elements';
 import {useEffect, useState} from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {FlatList, TextInput} from 'react-native-gesture-handler';
-import {SearchPost} from '../../service/post/searchPost';
+import {SearchPost} from '../../api/post/searchPost';
 import {IPost} from '../../interface/post.interface';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '../../routes/stack.interface';

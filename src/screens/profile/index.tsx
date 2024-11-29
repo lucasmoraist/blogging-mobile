@@ -1,9 +1,9 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {getOneTeacher} from '../../service/teacher/getOneTeacher';
+import {getOneTeacher} from '../../api/teacher/getOneTeacher';
 import {useEffect, useState} from 'react';
 import {IPost} from '../../interface/post.interface';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {getOneStudent} from '../../service/student/getOneStudent';
+import {getOneStudent} from '../../api/student/getOneStudent';
 import {FlatList, ScrollView} from 'react-native-gesture-handler';
 import {RenderPosts} from './renderPosts';
 

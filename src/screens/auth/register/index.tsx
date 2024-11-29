@@ -6,11 +6,11 @@ import {Controller, set, useForm, useWatch} from 'react-hook-form';
 import {Picker} from '@react-native-picker/picker';
 import {IUser} from '../../../interface/user.interface';
 import {ITeacher} from '../../../interface/teacher.interface';
-import {createUser} from '../../../service/user/register';
+import {createUser} from '../../../api/user/register';
 import {useState} from 'react';
-import {createTeacher} from '../../../service/teacher/create';
+import {createTeacher} from '../../../api/teacher/create';
 import {IStudent} from '../../../interface/student.interface';
-import {createStudent} from '../../../service/student/create';
+import {createStudent} from '../../../api/student/create';
 
 const logo = require('../../../assets/logo.png');
 

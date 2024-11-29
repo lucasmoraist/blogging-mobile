@@ -37,7 +37,7 @@ export function RenderPost({item}: Props) {
         </View>
         <Text style={styles.date}>{formatDate(item.createdat)}</Text>
       </View>
-      <Image source={{uri: item.urlimage}} style={styles.image} />
+      <Image source={{uri: item.urlImage}} style={styles.image} />
     </TouchableOpacity>
   );
 }

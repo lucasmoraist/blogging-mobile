@@ -1,11 +1,13 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {RenderPost} from './post';
 import {usePost} from '../../hooks/usePost';
-import { useEffect, useState } from 'react';
 
 export function Home() {
   const [posts] = usePost();
-  const [loaded, setLoaded] = useState(false);
+
+  if (posts.length === 0) {
+    return <View></View>;
+  }
 
   const header = () => {
     return (
@@ -14,18 +16,6 @@ export function Home() {
       </View>
     );
   };
-
-  useEffect(() => {
-    if (posts.length === 0) {
-      setLoaded(false); 
-    } else {
-      setLoaded(true);
-    }
-  }, [posts]);
-
-  if (!loaded) {
-    return <View></View>;
-  }
 
   return (
     <FlatList

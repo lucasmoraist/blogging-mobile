@@ -2,7 +2,7 @@ import {Text} from '@react-navigation/elements';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {IPost} from '../../interface/post.interface';
 import Icon from '@react-native-vector-icons/fontawesome6';
-import {deletePost} from '../../service/post/deletePost';
+import {deletePost} from '../../api/post/deletePost';
 
 export function RenderPosts(post: IPost) {
   const formatedText =

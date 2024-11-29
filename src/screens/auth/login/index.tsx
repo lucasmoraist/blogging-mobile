@@ -9,7 +9,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '../../../routes/stack.interface';
 import {Controller, useForm} from 'react-hook-form';
-import { Signin } from '../../../service/user/login';
+import { Signin } from '../../../api/user/login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const logo = require('../../../assets/logo.png');

@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import {IPost} from '../../interface/post.interface';
-import {getOnePost} from '../../service/post/getOnePost';
+import {getOnePost} from '../../api/post/getOnePost';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {NavigationProp, PropsStackRoutes} from '../../routes/stack.interface';
 
