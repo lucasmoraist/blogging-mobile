@@ -1,6 +1,7 @@
 import {Text} from '@react-navigation/elements';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {IPost} from '../../interface/post.interface';
+import Icon from '@react-native-vector-icons/fontawesome6';
 
 export function RenderPosts(post: IPost) {
   const formatedText =
@@ -12,8 +13,12 @@ export function RenderPosts(post: IPost) {
         <Text style={styles.title}>{formatedText}</Text>
       </View>
       <View style={styles.actions}>
-        <Text>Editar</Text>
-        <Text>Excluir</Text>
+        <TouchableOpacity>
+          <Icon name="pen-to-square" size={20} />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Icon name="trash-can" size={20} />
+        </TouchableOpacity>
       </View>
     </View>
   );

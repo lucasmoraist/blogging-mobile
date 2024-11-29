@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {getOneTeacher} from '../../service/teacher/getOneTeacher';
 import {useEffect, useState} from 'react';
 import {IPost} from '../../interface/post.interface';
@@ -36,32 +36,37 @@ export function Profile() {
     fetchData();
   }, []);
 
-  return (
-    <ScrollView>
-      <View style={styles.top}>
-        <Text style={styles.title}>Meu Perfil</Text>
-      </View>
-      <View style={styles.container}>
-        <View style={styles.person}>
-          <Image source={profileIcon} />
-          <View>
-            <Text style={styles.name}>{profile?.name}</Text>
-            <Text style={styles.schoolSubject}>{profile?.school_subject}</Text>
+  const headerList = () => {
+    return (
+      <>
+        <View style={styles.top}>
+          <Text style={styles.title}>Meu Perfil</Text>
+        </View>
+        <View style={styles.container}>
+          <View style={styles.person}>
+            <Image source={profileIcon} />
+            <View>
+              <Text style={styles.name}>{profile?.name}</Text>
+              <Text style={styles.schoolSubject}>
+                {profile?.school_subject}
+              </Text>
+            </View>
           </View>
         </View>
+      </>
+    );
+  };
 
-        {role === 'teacher' ? (
-          <FlatList
-            data={profile?.posts}
-            renderItem={p => RenderPosts(p.item)}
+  return (
+    <View style={styles.container}>
+      {role === 'teacher' ? (
+        <FlatList 
+          data={profile?.posts} 
+          renderItem={p => RenderPosts(p.item)}
+          ListHeaderComponent={headerList}
           />
-        ) : null}
-
-        <TouchableOpacity>
-          <Text>Excluir conta</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+      ) : null}
+    </View>
   );
 }
 

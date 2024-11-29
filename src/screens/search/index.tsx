@@ -6,6 +6,7 @@ import {SearchPost} from '../../service/post/searchPost';
 import {IPost} from '../../interface/post.interface';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '../../routes/stack.interface';
+import Icon from '@react-native-vector-icons/fontawesome6';
 
 export function Search() {
   const navigation = useNavigation<NavigationProp>();
@@ -15,7 +16,6 @@ export function Search() {
   useEffect(() => {
     async function fetchSearch() {
       const posts = await SearchPost(search);
-      
       setSearchResults(posts);
     }
 
@@ -34,6 +34,7 @@ export function Search() {
       </View>
       <TextInput
         placeholder="Pesquise por um título"
+        
         value={search}
         onChangeText={value => setSearch(value)}
         style={styles.searchInput}
@@ -42,7 +43,7 @@ export function Search() {
       <View style={styles.searchResults}>
         {search ? (
           <>
-            {searchResults.map(post => (
+            {searchResults.slice(0, 4).map(post => (
               <TouchableOpacity
                 key={post.id}
                 onPress={() => findPost(post.id)}
