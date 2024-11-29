@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Home} from '../screens/home';
 import {PostDetails} from '../screens/post-details';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -6,18 +6,25 @@ import {PropsStackRoutes, PropsTabRoutes} from './stack.interface';
 import {Login} from '../screens/auth/login';
 import {Register} from '../screens/auth/register';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Image} from 'react-native';
 import {Search} from '../screens/search';
 import {Profile} from '../screens/profile';
-
-const home = require('../assets/icon-home.png');
-const search = require('../assets/icon-search.png');
-const profile = require('../assets/icon-user.png');
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Icon from '@react-native-vector-icons/fontawesome6';
 
 const Stack = createStackNavigator<PropsStackRoutes>();
 const Tab = createBottomTabNavigator<PropsTabRoutes>();
 
 export function StackNavigationApp() {
+  const [role, setRole] = useState<string | null>();
+
+  useEffect(() => {
+    async function getRole() {
+      const role = await AsyncStorage.getItem('role');
+      setRole(role);
+    }
+    getRole();
+  }, []);
+
   const TabNavigation = () => {
     return (
       <Tab.Navigator
@@ -31,7 +38,12 @@ export function StackNavigationApp() {
           component={Home}
           options={{
             tabBarIcon: () => (
-              <Image source={home} style={{width: 20, height: 20}} />
+              <Icon
+                name="house"
+                iconStyle={'solid'}
+                size={20}
+                color={'#219EBC'}
+              />
             ),
           }}
         />
@@ -40,17 +52,31 @@ export function StackNavigationApp() {
           component={Search}
           options={{
             tabBarIcon: () => (
-              <Image source={search} style={{width: 20, height: 20}} />
+              <Icon
+                name="magnifying-glass"
+                iconStyle={'solid'}
+                size={20}
+                color={'#219EBC'}
+              />
             ),
           }}
         />
+        {role === 'teacher' ? (
+          <Tab.Screen
+            name="CreatePost"
+            component={() => <></>}
+            options={{
+              tabBarIcon: () => (
+                <Icon name="square-plus" size={20} color={'#219EBC'} />
+              ),
+            }}
+          />
+        ) : null}
         <Tab.Screen
           name="Profile"
           component={Profile}
           options={{
-            tabBarIcon: () => (
-              <Image source={profile} style={{width: 20, height: 20}} />
-            ),
+            tabBarIcon: () => <Icon name="user" size={20} color={'#219EBC'} />,
           }}
         />
       </Tab.Navigator>

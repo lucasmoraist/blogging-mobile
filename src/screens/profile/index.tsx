@@ -19,6 +19,7 @@ interface Data {
 export function Profile() {
   const [profile, setProfile] = useState<Data>();
   const [role, setRole] = useState<string | null>();
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -34,7 +35,17 @@ export function Profile() {
       }
     }
     fetchData();
-  }, []);
+
+    if (profile === undefined) {
+      setLoaded(false);
+    } else {
+      setLoaded(true);
+    }
+  }, [profile]);
+
+  if (!loaded) {
+    return <View></View>;
+  }
 
   const headerList = () => {
     return (
@@ -58,15 +69,15 @@ export function Profile() {
   };
 
   return (
-    <View style={styles.container}>
+    <>
       {role === 'teacher' ? (
-        <FlatList 
-          data={profile?.posts} 
+        <FlatList
+          data={profile?.posts}
           renderItem={p => RenderPosts(p.item)}
           ListHeaderComponent={headerList}
-          />
+        />
       ) : null}
-    </View>
+    </>
   );
 }
 

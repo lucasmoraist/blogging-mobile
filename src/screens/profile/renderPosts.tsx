@@ -2,6 +2,7 @@ import {Text} from '@react-navigation/elements';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {IPost} from '../../interface/post.interface';
 import Icon from '@react-native-vector-icons/fontawesome6';
+import {deletePost} from '../../service/post/deletePost';
 
 export function RenderPosts(post: IPost) {
   const formatedText =
@@ -16,7 +17,7 @@ export function RenderPosts(post: IPost) {
         <TouchableOpacity>
           <Icon name="pen-to-square" size={20} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => deletePost(post.id)}>
           <Icon name="trash-can" size={20} />
         </TouchableOpacity>
       </View>
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginVertical: 15,
+    marginHorizontal: 20,
   },
   content: {
     flexDirection: 'row',
