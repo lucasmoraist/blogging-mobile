@@ -8,8 +8,9 @@ import {
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '../../../routes/stack.interface';
-import {AuthLogin} from '../../../service/user/login';
 import {Controller, useForm} from 'react-hook-form';
+import { Signin } from '../../../service/user/login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const logo = require('../../../assets/logo.png');
 
@@ -27,11 +28,23 @@ export function Login() {
     formState: {errors},
   } = useForm<FormData>({});
 
-  const onSubmit = handleSubmit(data => {
-    const user = AuthLogin(data);
+  const onSubmit = handleSubmit(async data => {
+    const {username, password} = data;
 
-    if (user) {
+    try {
+      const response = await Signin({username, password});
+
+      if (!response) {
+        throw new Error('Erro ao fazer login');
+      }
+      
+      await AsyncStorage.setItem('token', response.token);
+      await AsyncStorage.setItem('user_id', String(response.user_id));
+      await AsyncStorage.setItem('role', response.role)
+      
       navigation.navigate('Tab');
+    } catch (error) {
+      console.error(error);
     }
   });
 
