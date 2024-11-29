@@ -1,28 +1,30 @@
-import {useEffect, useState} from 'react';
-import {listAll} from '../api/post/getPosts';
+import { useEffect, useState } from "react";
+import { getOnePost } from "../api/post/getOnePost";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { IPost } from "../interface/post.interface";
+import { PropsStackRoutes } from "../routes/stack.interface";
 
-export function usePost() {
-  const [posts, setPosts] = useState([]);
-  const [loaded, setLoaded] = useState(false);
+type PostDetailsRouteProp = RouteProp<PropsStackRoutes, 'PostDetails'>;
+
+export function usePost(): IPost {
+  const route = useRoute<PostDetailsRouteProp>();
+
+  const [post, setPost] = useState<IPost>();
+
+  const {id} = route.params;
 
   useEffect(() => {
     async function fetchPost() {
-      const response = await listAll(1, 10);
-      setPosts(response);
-    }
-
-    if (posts.length === 0) {
-      setLoaded(false);
-    } else {
-      setLoaded(true);
+      const post = await getOnePost(id);
+      setPost(post);
     }
 
     fetchPost();
-  }, [posts]);
+  }, [id]);
 
-  if (!loaded) {
-    return [];
+  if (!post) {
+    return {} as IPost;
   }
 
-  return [posts];
+  return post;
 }

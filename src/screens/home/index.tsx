@@ -1,13 +1,9 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {RenderPost} from './post';
-import {usePost} from '../../hooks/usePost';
+import {usePosts} from '../../hooks/usePosts';
 
 export function Home() {
-  const [posts] = usePost();
-
-  if (posts.length === 0) {
-    return <View></View>;
-  }
+  const [posts] = usePosts();
 
   const header = () => {
     return (

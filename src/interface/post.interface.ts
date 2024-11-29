@@ -2,7 +2,7 @@ export interface IPost {
     id: string;
     title: string;
     content: string;
-    urlImage: string;
+    urlimage: string;
     createdat: string;
     teacher_id: number;
     name: string;

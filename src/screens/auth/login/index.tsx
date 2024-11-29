@@ -9,8 +9,10 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '../../../routes/stack.interface';
 import {Controller, useForm} from 'react-hook-form';
-import { Signin } from '../../../api/user/login';
+import {Signin} from '../../../api/user/login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Button} from '../../../components/button';
+import { Input } from '../../../components/input';
 
 const logo = require('../../../assets/logo.png');
 
@@ -37,11 +39,11 @@ export function Login() {
       if (!response) {
         throw new Error('Erro ao fazer login');
       }
-      
+
       await AsyncStorage.setItem('token', response.token);
       await AsyncStorage.setItem('user_id', String(response.user_id));
-      await AsyncStorage.setItem('role', response.role)
-      
+      await AsyncStorage.setItem('role', response.role);
+
       navigation.navigate('Tab');
     } catch (error) {
       console.error(error);
@@ -53,51 +55,16 @@ export function Login() {
       <Image source={logo} style={styles.image} />
       <Text style={styles.title}>Faça login</Text>
       <View style={styles.form}>
-        <Controller
-          control={control}
-          name="username"
-          render={({field: {onChange, onBlur, value}}) => (
-            <View style={styles.label}>
-              <TextInput
-                placeholder="Email"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                style={styles.input}
-              />
-            </View>
-          )}
-        />
-
-        <Controller
-          control={control}
-          name="password"
-          render={({field: {onChange, onBlur, value}}) => (
-            <View style={styles.label}>
-              <TextInput
-                placeholder="Senha"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                secureTextEntry={true}
-                style={styles.input}
-              />
-            </View>
-          )}
-        />
+        <Input type='text' control={control} name='username' placeholder='Email'/>
+        <Input type='password' control={control} name='password' placeholder='Senha'/>
 
         <View style={styles.buttons}>
-          <TouchableOpacity
-            onPress={() => onSubmit()}
-            style={[styles.button, styles.btnPrimary]}>
-            <Text style={styles.btnTextPrimary}>Acessar</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
+          <Button type="primary" onPress={onSubmit} title="Acessar" />
+          <Button
+            type="secondary"
             onPress={() => navigation.navigate('Register')}
-            style={[styles.button, styles.btnSecondary]}>
-            <Text style={styles.btnTextSecondary}>Criar conta</Text>
-          </TouchableOpacity>
+            title="Criar conta"
+          />
         </View>
       </View>
     </View>
@@ -139,31 +106,5 @@ const styles = StyleSheet.create({
     gap: 10,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  button: {
-    padding: 10,
-    borderRadius: 5,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  btnPrimary: {
-    backgroundColor: '#219ebc',
-  },
-  btnSecondary: {
-    borderColor: '#219ebc',
-    borderWidth: 1,
-  },
-  btnTextPrimary: {
-    color: '#fff',
-    fontSize: 16,
-    lineHeight: 19,
-    fontWeight: 'bold',
-  },
-  btnTextSecondary: {
-    color: '#219ebc',
-    fontSize: 16,
-    lineHeight: 19,
-    fontWeight: 'bold',
   },
 });

@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -7,41 +6,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {IPost} from '../../interface/post.interface';
-import {getOnePost} from '../../api/post/getOnePost';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {NavigationProp, PropsStackRoutes} from '../../routes/stack.interface';
-
-type PostDetailsRouteProp = RouteProp<PropsStackRoutes, 'PostDetails'>;
+import {useNavigation} from '@react-navigation/native';
+import {NavigationProp} from '../../routes/stack.interface';
+import {FormatDate} from '../../components/formatDate';
+import {usePost} from '../../hooks/usePost';
 
 export function PostDetails() {
-  const route = useRoute<PostDetailsRouteProp>();
   const navigation = useNavigation<NavigationProp>();
 
-  const [post, setPost] = useState<IPost>();
-
-  const {id} = route.params;
-
-  useEffect(() => {
-    async function fetchPost() {
-      const post = await getOnePost(id);
-      setPost(post);
-    }
-
-    fetchPost();
-  }, [id]);
-
-  const formatDate = (date: string) => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString('pt-br', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    });
-  };
+  const post = usePost();
 
   if (!post) {
-    return <Text>Loading...</Text>;
+    return <View />;
   }
 
   return (
@@ -64,7 +40,7 @@ export function PostDetails() {
             <Text style={{fontSize: 16, fontWeight: 'bold'}}>•</Text>
             <Text style={styles.school_subject}>{post.school_subject}</Text>
           </View>
-          <Text style={styles.created_at}>{formatDate(post.createdat)}</Text>
+          <Text style={styles.created_at}>{FormatDate(post.createdat)}</Text>
         </View>
       </View>
       <Text style={styles.content}>{post.content}</Text>

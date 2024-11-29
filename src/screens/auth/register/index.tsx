@@ -11,6 +11,8 @@ import {useState} from 'react';
 import {createTeacher} from '../../../api/teacher/create';
 import {IStudent} from '../../../interface/student.interface';
 import {createStudent} from '../../../api/student/create';
+import {Button} from '../../../components/button';
+import {Input} from '../../../components/input';
 
 const logo = require('../../../assets/logo.png');
 
@@ -51,7 +53,7 @@ export function Register() {
     if (!responseUser?.id) {
       throw new Error('Erro ao criar usuário: ID não retornado');
     }
-    
+
     try {
       if (data.role === 'teacher') {
         const teacher: ITeacher = {
@@ -84,122 +86,73 @@ export function Register() {
     }
   });
 
+  const pickerItemsRole = [
+    {label: 'Aluno', value: 'student'},
+    {label: 'Professor', value: 'teacher'},
+  ];
+
+  const pickerItemsSubject = [
+    {label: 'Biologia', value: 'Biologia'},
+    {label: 'Física', value: 'Física'},
+    {label: 'Geografia', value: 'Geografia'},
+    {label: 'História', value: 'História'},
+    {label: 'Inglês', value: 'Inglês'},
+    {label: 'Matemática', value: 'Matemática'},
+    {label: 'Português', value: 'Português'},
+    {label: 'Química', value: 'Química'},
+  ];
+
   return (
     <View style={styles.container}>
       <Image source={logo} style={styles.image} />
       <Text style={styles.title}>Crie sua conta</Text>
       <View style={styles.form}>
-        <Controller
+        <Input
+          type="text"
           control={control}
           name="name"
-          render={({field: {onChange, onBlur, value}}) => (
-            <View style={styles.label}>
-              <TextInput
-                placeholder="Nome completo"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                style={styles.input}
-              />
-            </View>
-          )}
+          placeholder="Nome completo"
         />
 
-        <Controller
+        <Input
+          type="dropdown"
           control={control}
           name="role"
-          render={({field: {onChange, value}}) => (
-            <View style={styles.label}>
-              <View style={styles.picker}>
-                <Picker selectedValue={value} onValueChange={onChange}>
-                  <Picker.Item
-                    label="Tipo de perfil"
-                    value=""
-                    enabled={false}
-                    color="grey"
-                  />
-                  <Picker.Item label="Aluno" value="student" />
-                  <Picker.Item label="Professor" value="teacher" />
-                </Picker>
-              </View>
-            </View>
-          )}
+          placeholder="Tipo de perfil"
+          pickerItem={pickerItemsRole}
         />
 
         {selectedRole === 'teacher' && (
-          <Controller
-            control={control}
+          <Input
+            type="dropdown"
             name="school_subject"
-            render={({field: {onChange, value}}) => (
-              <View style={styles.label}>
-                <View style={styles.picker}>
-                  <Picker selectedValue={value} onValueChange={onChange}>
-                    <Picker.Item
-                      label="Selecione uma matéria"
-                      value=""
-                      enabled={false}
-                      color="grey"
-                    />
-                    <Picker.Item label="Biologia" value="Biologia" />
-                    <Picker.Item label="Física" value="Física" />
-                    <Picker.Item label="Geografia" value="Geografia" />
-                    <Picker.Item label="História" value="História" />
-                    <Picker.Item label="Inglês" value="Inglês" />
-                    <Picker.Item label="Matemática" value="Matemática" />
-                    <Picker.Item label="Português" value="Português" />
-                    <Picker.Item label="Química" value="Química" />
-                  </Picker>
-                </View>
-              </View>
-            )}
+            control={control}
+            placeholder="Selecione uma matéria"
+            pickerItem={pickerItemsSubject}
           />
         )}
 
-        <Controller
+        <Input
+          type="text"
           control={control}
           name="username"
-          render={({field: {onChange, onBlur, value}}) => (
-            <View style={styles.label}>
-              <TextInput
-                placeholder="Crie um username"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                style={styles.input}
-              />
-            </View>
-          )}
+          placeholder="Crie um username"
         />
 
-        <Controller
+        <Input
+          type="password"
           control={control}
           name="password"
-          render={({field: {onChange, onBlur, value}}) => (
-            <View style={styles.label}>
-              <TextInput
-                placeholder="Crie uma senha"
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                secureTextEntry={true}
-                style={styles.input}
-              />
-            </View>
-          )}
+          placeholder="Crie uma senha"
         />
 
         <View style={styles.buttons}>
-          <TouchableOpacity
-            onPress={() => onSubmit()}
-            style={[styles.button, styles.btnPrimary]}>
-            <Text style={styles.btnTextPrimary}>Criar conta</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            style={[styles.button, styles.btnSecondary]}
-            onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.btnTextSecondary}>Voltar</Text>
-          </TouchableOpacity>
+          <Button type="primary" onPress={onSubmit} title="Criar conta" />
+          <Button
+            type="secondary"
+            onPress={() => navigation.navigate('Login')}
+            title="Voltar"
+          />
         </View>
       </View>
     </View>

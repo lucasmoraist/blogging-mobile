@@ -2,6 +2,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {IPost} from '../../interface/post.interface';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '../../routes/stack.interface';
+import {FormatDate} from '../../components/formatDate';
 
 interface Props {
   item: IPost;
@@ -10,18 +11,8 @@ interface Props {
 export function RenderPost({item}: Props) {
   const route = useNavigation<NavigationProp>();
 
-  const renderContent = (content: string) => {
-    return content.length > 80 ? content.slice(0, 80) + '...' : content;
-  };
-
-  const formatDate = (date: string) => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleDateString('pt-br', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    });
-  };
+  const renderContent =
+    item.content.length > 80 ? item.content.slice(0, 80) + '...' : item.content;
 
   return (
     <TouchableOpacity
@@ -33,11 +24,11 @@ export function RenderPost({item}: Props) {
         <Text style={styles.author}>{item.name}</Text>
         <View>
           <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.content}>{renderContent(item.content)}</Text>
+          <Text style={styles.content}>{renderContent}</Text>
         </View>
-        <Text style={styles.date}>{formatDate(item.createdat)}</Text>
+        <Text style={styles.date}>{FormatDate(item.createdat)}</Text>
       </View>
-      <Image source={{uri: item.urlImage}} style={styles.image} />
+      <Image source={{uri: item.urlimage}} style={styles.image} />
     </TouchableOpacity>
   );
 }
