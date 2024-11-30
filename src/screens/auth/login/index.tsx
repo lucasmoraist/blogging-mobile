@@ -2,13 +2,11 @@ import {
   Image,
   StyleSheet,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '../../../routes/stack.interface';
-import {Controller, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import {Signin} from '../../../api/user/login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button} from '../../../components/button';

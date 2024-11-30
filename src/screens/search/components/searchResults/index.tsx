@@ -1,12 +1,14 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { IPost } from "../../../../interface/post.interface";
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 interface Props {
-    post: IPost;
-    findPost: (id?: string) => void;
+  post: {
+    id: string;
+    title: string;
+  };
+  findPost: (id: string) => void;
 }
 
-export function SearchResults({post, findPost}: Props)  {
+export function SearchResults({post, findPost}: Props) {
   return (
     <TouchableOpacity
       onPress={() => findPost(post.id)}
@@ -20,17 +22,16 @@ export function SearchResults({post, findPost}: Props)  {
       <Text style={styles.searchResultTitle}>{post.title}</Text>
     </TouchableOpacity>
   );
-};
+}
 
 const styles = StyleSheet.create({
-    searchResult: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      margin: 10,
-    },
-    searchResultTitle: {
-      fontSize: 18,
-      marginLeft: 10,
-    },
-  });
-  
+  searchResult: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    margin: 10,
+  },
+  searchResultTitle: {
+    fontSize: 18,
+    marginLeft: 10,
+  },
+});

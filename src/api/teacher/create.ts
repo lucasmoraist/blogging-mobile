@@ -1,7 +1,13 @@
-import {ITeacher} from '../../interface/teacher.interface';
+import {ITeacher} from '../../interface/teacher/teacher.interface';
 import {api} from '../api';
 
-export async function createTeacher({name, school_subject, user_id}: ITeacher) {
+interface TeacherRequest {
+  name: string;
+  school_subject: string;
+  user_id: number;
+}
+
+export async function createTeacher({name, school_subject, user_id}: TeacherRequest) {
   const response = await api
     .post('/teacher', {
       name,

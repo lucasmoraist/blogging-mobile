@@ -1,7 +1,12 @@
-import {IStudent} from '../../interface/student.interface';
+import {IStudent} from '../../interface/student/student.interface';
 import {api} from '../api';
 
-export async function createStudent({name, user_id}: IStudent) {
+interface StudentRequest {
+  name: string;
+  user_id: number;
+}
+
+export async function createStudent({name, user_id}: StudentRequest) {
   const response = api
     .post('/student', {
       name,

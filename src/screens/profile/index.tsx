@@ -1,23 +1,36 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {getOneTeacher} from '../../api/teacher/getOneTeacher';
 import {useEffect, useState} from 'react';
-import {IPost} from '../../interface/post.interface';
+import {IPost} from '../../interface/post/post.interface';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getOneStudent} from '../../api/student/getOneStudent';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import {FlatList} from 'react-native-gesture-handler';
 import {RenderPosts} from './renderPosts';
 
 const profileIcon = require('../../assets/profile.png');
 
-interface Data {
-  id?: number;
+// interface Data {
+//   id: number;
+//   name: string;
+//   posts?: IPost[];
+//   school_subject?: string;
+// }
+
+interface Posts {
+  id: string;
+  title: string;
+  urlImage: string;
+}
+
+interface TeacherResponse {
+  id: number;
   name: string;
-  posts?: IPost[];
-  school_subject?: string;
+  school_subject: string;
+  posts: Posts[];
 }
 
 export function Profile() {
-  const [profile, setProfile] = useState<Data>();
+  const [profile, setProfile] = useState<TeacherResponse>();
   const [role, setRole] = useState<string | null>();
   const [loaded, setLoaded] = useState(false);
 

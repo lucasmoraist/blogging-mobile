@@ -1,7 +1,6 @@
 import {useForm} from 'react-hook-form';
 import {StyleSheet, Text, View} from 'react-native';
 import {getOneTeacher} from '../../api/teacher/getOneTeacher';
-import {IPost} from '../../interface/post.interface';
 import {createPost} from '../../api/post/createPost';
 import {Input} from '../../components/input';
 import {Button} from '../../components/button';
@@ -27,13 +26,12 @@ export function Create() {
       throw new Error('Erro ao buscar professor: ID não retornado');
     }
     try {
-      const post: IPost = {
+      const post = {
         title: data.title,
         content: data.content,
         urlimage: data.urlimage,
         teacher_id: teacher.id,
       };
-      console.log('Post: ' + post);
 
       await createPost(post);
     } catch (error) {
@@ -79,15 +77,15 @@ const styles = StyleSheet.create({
     height: 80,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 40
+    marginBottom: 40,
   },
   titulo: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#fff'
+    color: '#fff',
   },
   form: {
     marginHorizontal: 20,
-    gap: 10
+    gap: 10,
   },
-})
+});
