@@ -139,7 +139,7 @@ export function Register() {
               placeholder="Selecione uma matéria"
               pickerItem={pickerItemsSubject}
             />
-            <Text>{errors.school_subject?.message}</Text>
+            {errors.school_subject && <Text>{errors.school_subject.message}</Text>}
           </>
         )}
 
