@@ -27,6 +27,7 @@ export function Input({control, name, placeholder, type, pickerItem}: Props) {
                 value={value}
                 style={styles.input}
               />
+              
             </View>
           )}
         />

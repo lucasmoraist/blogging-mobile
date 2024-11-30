@@ -12,12 +12,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button} from '../../../components/button';
 import { Input } from '../../../components/input';
 
+import * as Yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 const logo = require('../../../assets/logo.png');
 
-type FormData = {
-  username: string;
-  password: string;
-};
+const schema = Yup.object({
+  username: Yup.string().required('Username é obrigatório'),
+  password: Yup.string().required('Senha é obrigatória'),
+})
+
+type FormData = Yup.InferType<typeof schema>;
 
 export function Login() {
   const navigation = useNavigation<NavigationProp>();
@@ -26,7 +31,9 @@ export function Login() {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm<FormData>({});
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = handleSubmit(async data => {
     const {username, password} = data;
@@ -53,8 +60,10 @@ export function Login() {
       <Image source={logo} style={styles.image} />
       <Text style={styles.title}>Faça login</Text>
       <View style={styles.form}>
-        <Input type='text' control={control} name='username' placeholder='Email'/>
+        <Input type='text' control={control} name='username' placeholder='Username'/>
+        {errors.username && <Text>{errors.username.message}</Text>}
         <Input type='password' control={control} name='password' placeholder='Senha'/>
+        {errors.password && <Text>{errors.password.message}</Text>}
 
         <View style={styles.buttons}>
           <Button type="primary" onPress={onSubmit} title="Acessar" />

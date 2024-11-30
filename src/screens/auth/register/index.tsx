@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import {NavigationProp} from '../../../routes/stack.interface';
 import {useForm, useWatch} from 'react-hook-form';
 import {createUser} from '../../../api/user/register';
@@ -7,16 +7,27 @@ import {createTeacher} from '../../../api/teacher/create';
 import {createStudent} from '../../../api/student/create';
 import {Button} from '../../../components/button';
 import {Input} from '../../../components/input';
+import * as Yup from 'yup';
+
+import {yupResolver} from '@hookform/resolvers/yup';
 
 const logo = require('../../../assets/logo.png');
 
-type FormData = {
-  name: string;
-  school_subject: string;
-  role: 'teacher' | 'student';
-  username: string;
-  password: string;
-};
+const schema = Yup.object({
+  name: Yup.string().required('Nome é obrigatório'),
+  role: Yup.string()
+    .required('Tipo de perfil é obrigatório')
+    .oneOf(['student', 'teacher']),
+  school_subject: Yup.string().when('role', ([role]) => {
+    return role === 'teacher'
+      ? Yup.string().required('Matéria é obrigatória')
+      : Yup.string().notRequired();
+  }),
+  username: Yup.string().required('Username é obrigatório'),
+  password: Yup.string().required('Senha é obrigatória'),
+});
+
+type FormData = Yup.InferType<typeof schema>;
 
 export function Register() {
   const navigation = useNavigation<NavigationProp>();
@@ -25,7 +36,9 @@ export function Register() {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm<FormData>({});
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
 
   // O useWatch é um hook do react-hook-form que permite que a tela reaja a mudanças no valor de um campo no formulário
   const selectedRole = useWatch({
@@ -106,6 +119,7 @@ export function Register() {
           name="name"
           placeholder="Nome completo"
         />
+        {errors.name && <Text>{errors.name.message}</Text>}
 
         <Input
           type="dropdown"
@@ -114,15 +128,19 @@ export function Register() {
           placeholder="Tipo de perfil"
           pickerItem={pickerItemsRole}
         />
+        {errors.role && <Text>{errors.role.message}</Text>}
 
         {selectedRole === 'teacher' && (
-          <Input
-            type="dropdown"
-            name="school_subject"
-            control={control}
-            placeholder="Selecione uma matéria"
-            pickerItem={pickerItemsSubject}
-          />
+          <>
+            <Input
+              type="dropdown"
+              name="school_subject"
+              control={control}
+              placeholder="Selecione uma matéria"
+              pickerItem={pickerItemsSubject}
+            />
+            <Text>{errors.school_subject?.message}</Text>
+          </>
         )}
 
         <Input
@@ -131,6 +149,7 @@ export function Register() {
           name="username"
           placeholder="Crie um username"
         />
+        {errors.username && <Text>{errors.username.message}</Text>}
 
         <Input
           type="password"
@@ -138,6 +157,7 @@ export function Register() {
           name="password"
           placeholder="Crie uma senha"
         />
+        {errors.password && <Text>{errors.password.message}</Text>}
 
         <View style={styles.buttons}>
           <Button type="primary" onPress={onSubmit} title="Criar conta" />

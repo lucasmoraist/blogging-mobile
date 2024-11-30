@@ -2,7 +2,7 @@ import {api} from '../api';
 
 interface TeacherRequest {
   name: string;
-  school_subject: string;
+  school_subject?: string;
   user_id: number;
 }
 
