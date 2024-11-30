@@ -1,6 +1,6 @@
 import {Picker} from '@react-native-picker/picker';
 import {Controller} from 'react-hook-form';
-import {StyleSheet, View} from 'react-native';
+import {StyleProp, StyleSheet, TextStyle, View} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 
 interface Props {
@@ -9,9 +9,11 @@ interface Props {
   name: string;
   placeholder: string;
   pickerItem?: {label: string; value: string}[];
+  style?: StyleProp<TextStyle>;
+  multiline?: boolean;
 }
 
-export function Input({control, name, placeholder, type, pickerItem}: Props) {
+export function Input({control, name, placeholder, type, pickerItem, style, multiline}: Props) {
   return (
     <>
       {type === 'text' ? (
@@ -25,7 +27,8 @@ export function Input({control, name, placeholder, type, pickerItem}: Props) {
                 onBlur={onBlur}
                 onChangeText={onChange}
                 value={value}
-                style={styles.input}
+                multiline={multiline ? true : false}
+                style={[styles.input, style]}
               />
               
             </View>

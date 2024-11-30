@@ -14,7 +14,10 @@ import {yupResolver} from '@hookform/resolvers/yup';
 const logo = require('../../../assets/logo.png');
 
 const schema = Yup.object({
-  name: Yup.string().required('Nome é obrigatório'),
+  name: Yup.string()
+    .required('Nome é obrigatório')
+    .min(3, 'Nome deve ter no mínimo 3 caracteres')
+    .max(255, 'Nome deve ter no máximo 255 caracteres'),
   role: Yup.string()
     .required('Tipo de perfil é obrigatório')
     .oneOf(['student', 'teacher']),
@@ -23,8 +26,14 @@ const schema = Yup.object({
       ? Yup.string().required('Matéria é obrigatória')
       : Yup.string().notRequired();
   }),
-  username: Yup.string().required('Username é obrigatório'),
-  password: Yup.string().required('Senha é obrigatória'),
+  username: Yup.string()
+    .required('Username é obrigatório')
+    .min(3, 'Username deve ter no mínimo 3 caracteres')
+    .max(255, 'Username deve ter no máximo 255 caracteres'),
+  password: Yup.string()
+    .required('Senha é obrigatória')
+    .min(8, 'Senha deve ter no mínimo 8 caracteres')
+    .max(255, 'Senha deve ter no máximo 255 caracteres'),
 });
 
 type FormData = Yup.InferType<typeof schema>;
@@ -139,7 +148,9 @@ export function Register() {
               placeholder="Selecione uma matéria"
               pickerItem={pickerItemsSubject}
             />
-            {errors.school_subject && <Text>{errors.school_subject.message}</Text>}
+            {errors.school_subject && (
+              <Text>{errors.school_subject.message}</Text>
+            )}
           </>
         )}
 

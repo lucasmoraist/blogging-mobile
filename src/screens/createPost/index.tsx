@@ -4,20 +4,31 @@ import {getOneTeacher} from '../../api/teacher/getOneTeacher';
 import {createPost} from '../../api/post/createPost';
 import {Input} from '../../components/input';
 import {Button} from '../../components/button';
+import * as Yup from 'yup';
+import {yupResolver} from '@hookform/resolvers/yup';
 
-type FormData = {
-  title: string;
-  content: string;
-  urlimage: string;
-  teacher_id: number;
-};
+const schema = Yup.object({
+  title: Yup.string()
+    .required('Título é obrigatório')
+    .min(10, 'Título deve ter no mínimo 10 caracteres')
+    .max(255, 'Título deve ter no máximo 255 caracteres'),
+  content: Yup.string().required('Conteúdo é obrigatório'),
+  urlimage: Yup.string()
+    .required('URL da imagem é obrigatória')
+    .url('URL inválida'),
+  teacher_id: Yup.number().required('ID do professor é obrigatório'),
+});
+
+type FormData = Yup.InferType<typeof schema>;
 
 export function Create() {
   const {
     control,
     handleSubmit,
     formState: {errors},
-  } = useForm<FormData>({});
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = handleSubmit(async data => {
     const teacher = await getOneTeacher();
@@ -52,18 +63,22 @@ export function Create() {
           name="title"
           placeholder="Título do Post"
         />
-        <Input
-          type="text"
-          control={control}
-          name="content"
-          placeholder="Conteúdo do Post"
-        />
+        {errors.title && <Text>{errors.title.message}</Text>}
         <Input
           type="text"
           control={control}
           name="urlimage"
           placeholder="URL da imagem"
         />
+        {errors.urlimage && <Text>{errors.urlimage.message}</Text>}
+        
+        <Input
+          type="text"
+          control={control}
+          name="content"
+          placeholder="Conteúdo do Post"
+        />
+        {errors.content && <Text>{errors.content.message}</Text>}
 
         <Button type="primary" title="Salvar" onPress={onSubmit} />
       </View>

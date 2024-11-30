@@ -4,8 +4,9 @@ import {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getOneStudent} from '../../api/student/getOneStudent';
 import {FlatList} from 'react-native-gesture-handler';
-import {RenderPosts} from './renderPosts';
 import { IProfile } from '../../interface/profile/profile.interface';
+import { PostItem } from './types/renderPosts.interface';
+import { RenderPosts } from './renderPosts';
 
 const profileIcon = require('../../assets/profile.png');
 
@@ -13,6 +14,7 @@ export function Profile() {
   const [profile, setProfile] = useState<IProfile>();
   const [role, setRole] = useState<string | null>();
   const [loaded, setLoaded] = useState(false);
+  const [posts, setPosts] = useState<PostItem[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -22,23 +24,25 @@ export function Profile() {
       if (role === 'teacher') {
         const response = await getOneTeacher();
         setProfile(response);
+        setPosts(response.posts || []); 
       } else {
         const response = await getOneStudent();
         setProfile(response);
       }
-    }
-    fetchData();
 
-    if (profile === undefined) {
-      setLoaded(false);
-    } else {
       setLoaded(true);
     }
-  }, [profile]);
+    fetchData();
+  }, []);
 
   if (!loaded) {
     return <View></View>;
   }
+
+  const handleDeletePost = (id: string) => {
+    const updatedPosts = posts.filter(post => post.id !== id);
+    setPosts(updatedPosts);
+  };
 
   const headerList = () => {
     return (
@@ -65,8 +69,10 @@ export function Profile() {
     <>
       {role === 'teacher' ? (
         <FlatList
-          data={profile?.posts}
-          renderItem={p => <RenderPosts item={p.item}/>}
+          data={posts}
+          renderItem={({ item }) => (
+            <RenderPosts item={item} onDelete={handleDeletePost} />
+          )}
           ListHeaderComponent={headerList}
         />
       ) : null}
