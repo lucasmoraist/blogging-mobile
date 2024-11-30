@@ -4,9 +4,9 @@ interface Posts {
   urlImage: string;
 }
 
-export interface ITeacher {
+export interface IProfile {
   id: number;
   name: string;
-  school_subject: string;
-  posts: Posts[];
+  school_subject?: string;
+  posts?: Posts[];
 }

@@ -1,8 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {api} from '../api';
-import { ITeacher } from '../../interface/teacher/teacher.interface';
 
-export async function getOneTeacher(): Promise<ITeacher> {
+export async function getOneTeacher() {
   const token = await AsyncStorage.getItem('token');
   const userId = await AsyncStorage.getItem('user_id');
   
