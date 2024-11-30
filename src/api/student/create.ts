@@ -1,4 +1,3 @@
-import {IStudent} from '../../interface/student/student.interface';
 import {api} from '../api';
 
 interface StudentRequest {

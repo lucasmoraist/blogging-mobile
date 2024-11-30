@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { getOnePost } from "../api/post/getOnePost";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import { IPost } from "../interface/post/post.interface";
 import { PropsStackRoutes } from "../routes/stack.interface";
+import { IPost } from "../interface/post/post.interface";
 
 type PostDetailsRouteProp = RouteProp<PropsStackRoutes, 'PostDetails'>;
 

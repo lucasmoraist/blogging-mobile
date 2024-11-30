@@ -1,4 +1,3 @@
-import {IUser} from '../../interface/user/user.interface';
 import {api} from '../api';
 
 interface UserRequest {

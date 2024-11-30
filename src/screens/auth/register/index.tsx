@@ -2,11 +2,8 @@ import {useNavigation} from '@react-navigation/native';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {NavigationProp} from '../../../routes/stack.interface';
 import {useForm, useWatch} from 'react-hook-form';
-import {IUser} from '../../../interface/user/user.interface';
-import {ITeacher} from '../../../interface/teacher/teacher.interface';
 import {createUser} from '../../../api/user/register';
 import {createTeacher} from '../../../api/teacher/create';
-import {IStudent} from '../../../interface/student/student.interface';
 import {createStudent} from '../../../api/student/create';
 import {Button} from '../../../components/button';
 import {Input} from '../../../components/input';
@@ -38,7 +35,7 @@ export function Register() {
   });
 
   const onSubmit = handleSubmit(async data => {
-    const user: IUser = {
+    const user = {
       username: data.username,
       password: data.password,
       role: data.role,
@@ -52,7 +49,7 @@ export function Register() {
 
     try {
       if (data.role === 'teacher') {
-        const teacher: ITeacher = {
+        const teacher = {
           name: data.name,
           school_subject: data.school_subject,
           user_id: responseUser.id,
@@ -64,7 +61,7 @@ export function Register() {
           throw new Error('Erro ao criar professor');
         }
       } else {
-        const student: IStudent = {
+        const student = {
           name: data.name,
           user_id: responseUser.id,
         };

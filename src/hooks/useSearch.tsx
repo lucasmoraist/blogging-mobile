@@ -1,14 +1,9 @@
 import {useEffect, useState} from 'react';
 import {SearchPost} from '../api/post/searchPost';
-import {IPost} from '../interface/post/post.interface';
-
-interface Posts {
-  id: string;
-  title: string;
-}
+import { ISearch } from '../interface/post/search.interface';
 
 export function useSearch(search: string) {
-  const [searchResults, setSearchResults] = useState<Posts[]>([]);
+  const [searchResults, setSearchResults] = useState<ISearch[]>([]);
 
   useEffect(() => {
     async function fetchSearch() {
