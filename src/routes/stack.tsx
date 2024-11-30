@@ -11,6 +11,7 @@ import {Profile} from '../screens/profile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from '@react-native-vector-icons/fontawesome6';
 import { Create } from '../screens/createPost';
+import { EditPost } from '../screens/editPost';
 
 const Stack = createStackNavigator<PropsStackRoutes>();
 const Tab = createBottomTabNavigator<PropsTabRoutes>();
@@ -93,8 +94,8 @@ export function StackNavigationApp() {
       }}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
-      {/* <Stack.Screen name="Home" component={Home} /> */}
       <Stack.Screen name="PostDetails" component={PostDetails} />
+      <Stack.Screen name='EditPost' component={EditPost}/>
       <Stack.Screen name="Tab" component={TabNavigation} />
     </Stack.Navigator>
   );

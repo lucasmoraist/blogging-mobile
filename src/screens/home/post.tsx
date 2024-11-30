@@ -1,11 +1,17 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {IPost} from '../../interface/post.interface';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '../../routes/stack.interface';
 import {FormatDate} from '../../components/formatDate';
 
 interface Props {
-  item: IPost;
+  item: {
+    id: string;
+    name: string;
+    title: string;
+    content: string;
+    createdat: string;
+    urlimage: string;
+  };
 }
 
 export function RenderPost({item}: Props) {

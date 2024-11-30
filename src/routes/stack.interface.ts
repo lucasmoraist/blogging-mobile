@@ -5,6 +5,7 @@ export type PropsStackRoutes = {
   Register: undefined;
   Tab: undefined;
   PostDetails: {id: string};
+  EditPost: {id: string};
 };
 
 export type	PropsTabRoutes = {

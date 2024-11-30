@@ -13,7 +13,7 @@ export function Search() {
   const navigation = useNavigation<NavigationProp>();
   const results = useSearch(search);
 
-  const findPost = (id: string) => {
+  const findPost = (id?: string) => {
     // Salvar resultado da busca no async storage para exibir na tela como buscas recentes
     navigation.navigate('PostDetails', {id: id});
   };

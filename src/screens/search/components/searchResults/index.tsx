@@ -3,7 +3,7 @@ import { IPost } from "../../../../interface/post.interface";
 
 interface Props {
     post: IPost;
-    findPost: (id: string) => void;
+    findPost: (id?: string) => void;
 }
 
 export function SearchResults({post, findPost}: Props)  {

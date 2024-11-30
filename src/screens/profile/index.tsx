@@ -10,7 +10,7 @@ import {RenderPosts} from './renderPosts';
 const profileIcon = require('../../assets/profile.png');
 
 interface Data {
-  id: number;
+  id?: number;
   name: string;
   posts?: IPost[];
   school_subject?: string;
@@ -73,7 +73,7 @@ export function Profile() {
       {role === 'teacher' ? (
         <FlatList
           data={profile?.posts}
-          renderItem={p => RenderPosts(p.item)}
+          renderItem={p => <RenderPosts item={p.item}/>}
           ListHeaderComponent={headerList}
         />
       ) : null}
