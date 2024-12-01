@@ -1,12 +1,18 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {getOneTeacher} from '../../api/teacher/getOneTeacher';
 import {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getOneStudent} from '../../api/student/getOneStudent';
 import {FlatList} from 'react-native-gesture-handler';
-import { IProfile } from '../../interface/profile/profile.interface';
-import { PostItem } from './types/renderPosts.interface';
-import { RenderPosts } from './renderPosts';
+import {IProfile} from '../../interface/profile/profile.interface';
+import {PostItem} from './types/renderPosts.interface';
+import {RenderPosts} from './renderPosts';
 
 const profileIcon = require('../../assets/profile.png');
 
@@ -24,7 +30,7 @@ export function Profile() {
       if (role === 'teacher') {
         const response = await getOneTeacher();
         setProfile(response);
-        setPosts(response.posts || []); 
+        setPosts(response.posts || []);
       } else {
         const response = await getOneStudent();
         setProfile(response);
@@ -43,6 +49,19 @@ export function Profile() {
     const updatedPosts = posts.filter(post => post.id !== id);
     setPosts(updatedPosts);
   };
+
+  const handleDeleteProfile = async () => {
+    const role = await AsyncStorage.getItem('role');
+
+    if (role === 'teacher') {
+      // delete teacher
+      const teacher = await getOneTeacher();
+      
+    } else {
+      // delete student
+      const student = await getOneStudent();
+    }
+  }
 
   const headerList = () => {
     return (
@@ -65,15 +84,26 @@ export function Profile() {
     );
   };
 
+  const footerList = () => {
+    return (
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.deleteButton}>
+          <Text style={styles.textButton}>Excluir conta</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
   return (
     <>
       {role === 'teacher' ? (
         <FlatList
           data={posts}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <RenderPosts item={item} onDelete={handleDeletePost} />
           )}
           ListHeaderComponent={headerList}
+          ListFooterComponent={footerList}
         />
       ) : null}
     </>
@@ -109,5 +139,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 20,
     color: 'gray',
+  },
+  footer: {
+    margin: 20,
+    alignItems: 'center',
+  },
+  deleteButton: {
+    borderColor: '#e63946',
+    borderWidth: 1,
+    borderRadius: 5,
+    height: 40,
+    width: 150,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textButton: {
+    color: '#e63946',
+    fontWeight: 'bold',
+    fontSize: 16,
+    lineHeight: 24,
   },
 });
