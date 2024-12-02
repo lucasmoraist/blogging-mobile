@@ -1,10 +1,4 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {getOneTeacher} from '../../api/teacher/getOneTeacher';
 import {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -56,12 +50,11 @@ export function Profile() {
     if (role === 'teacher') {
       // delete teacher
       const teacher = await getOneTeacher();
-      
     } else {
       // delete student
       const student = await getOneStudent();
     }
-  }
+  };
 
   const headerList = () => {
     return (
@@ -105,7 +98,27 @@ export function Profile() {
           ListHeaderComponent={headerList}
           ListFooterComponent={footerList}
         />
-      ) : null}
+      ) : (
+        <>
+          <View style={styles.top}>
+            <Text style={styles.title}>Meu Perfil</Text>
+          </View>
+          <View style={styles.container}>
+            <View style={styles.person}>
+              <Image source={profileIcon} />
+              <View style={styles.profile}>
+                <Text style={styles.name}>{profile?.name}</Text>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.footer}>
+            <TouchableOpacity style={styles.deleteButton}>
+              <Text style={styles.textButton}>Excluir conta</Text>
+            </TouchableOpacity>
+          </View>
+        </>
+      )}
     </>
   );
 }
@@ -129,6 +142,9 @@ const styles = StyleSheet.create({
   person: {
     flexDirection: 'row',
     gap: 10,
+  },
+  profile: {
+    justifyContent: 'center',
   },
   name: {
     fontSize: 20,

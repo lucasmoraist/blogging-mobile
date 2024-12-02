@@ -14,7 +14,7 @@ export async function createPost({
   urlimage,
   teacher_id,
 }: PostRequest) {
-  const token = await AsyncStorage.getItem('token');
+  const token = await AsyncStorage.getItem('token');  
 
   const response = await api
     .post(
@@ -32,7 +32,7 @@ export async function createPost({
       },
     )
     .then(res => res.data)
-    .catch(err => console.error(err));  
+    .catch(err => console.error(err));      
 
     return response;
 }

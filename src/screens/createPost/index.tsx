@@ -6,6 +6,8 @@ import {Input} from '../../components/input';
 import {Button} from '../../components/button';
 import * as Yup from 'yup';
 import {yupResolver} from '@hookform/resolvers/yup';
+import {NavigationProp} from '../../routes/stack.interface';
+import {useNavigation} from '@react-navigation/native';
 
 const schema = Yup.object({
   title: Yup.string()
@@ -16,12 +18,14 @@ const schema = Yup.object({
   urlimage: Yup.string()
     .required('URL da imagem é obrigatória')
     .url('URL inválida'),
-  teacher_id: Yup.number().required('ID do professor é obrigatório'),
+  teacher_id: Yup.number().optional(),
 });
 
 type FormData = Yup.InferType<typeof schema>;
 
 export function Create() {
+  const navigation = useNavigation<NavigationProp>();
+
   const {
     control,
     handleSubmit,
@@ -44,7 +48,11 @@ export function Create() {
         teacher_id: teacher.id,
       };
 
-      await createPost(post);
+      const response = await createPost(post);
+
+      if (response.id) {
+        navigation.navigate('Tab');
+      }
     } catch (error) {
       console.error(error);
     }
@@ -71,7 +79,7 @@ export function Create() {
           placeholder="URL da imagem"
         />
         {errors.urlimage && <Text>{errors.urlimage.message}</Text>}
-        
+
         <Input
           type="text"
           control={control}

@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const ipLocal = '';
+
 export const api = axios.create({
-  baseURL: 'http://192.168.15.11:3000',
+  baseURL: `http://${ipLocal}:3000`,
 });
