@@ -1,6 +1,6 @@
-# Tech Challenge 04 - Frontend Motile (Grupo 08)
+# Tech Challenge 04 - Frontend Mobile (Grupo 08)
 
-Projeto com o desafio para o quarto módulo do curso Full Stack Development - Pós Tech
+Repositório com o desafio para o quarto módulo do curso Full Stack Development - Pós Tech
 
 ![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
