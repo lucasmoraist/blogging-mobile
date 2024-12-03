@@ -12,10 +12,10 @@ Repositório com o desafio para o quarto módulo do curso Full Stack Development
 
 Grupo 08:
 
-- Carolina de Araujo Nogueira Tinen  RM353510
-- Esdras de Souza Mendes RM356127
-- Lucas de Morais Nascimento Taguchi RM355982
-- Marco Antonio Valentim Machado Junior RM354344
+- [Carolina de Araujo Nogueira Tinen](https://github.com/carolinanog)  RM353510
+- [Esdras de Souza Mendes](https://github.com/EsdrasZero) RM356127
+- [Lucas de Morais Nascimento Taguchi](https://github.com/lucasmoraist) RM355982
+- [Marco Antonio Valentim Machado Junior](https://github.com/mvalentimjr) RM354344
 
 ## Requisitos
 - Desenvolvimento de aplicação com React Native
